@@ -48,7 +48,8 @@ public class webapp {
 			String pagetitle = driver.getTitle();
 			System.out.println("My page is ****** "+pagetitle);
 			
-			driver.findElementByXPath("//*[@id='send2']").click();
+			driver.findElementByXPath("//*[text()='Log Out']").click();
+			driver.quit();
 			
 		}
 	}
