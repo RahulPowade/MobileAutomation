@@ -3775,4 +3775,862 @@ public class TryPage extends GenericFunctions {
 
 	}
 
-	public
+	public WebElement Select_datahandler(String name) {
+		WebElement el = null;
+		try {
+			WebElement text = this.driver.findElement(By.xpath("//*[text()='" + name + "']"));
+			Assert.assertTrue(text.isDisplayed());
+			el = text;
+		} catch (NoSuchElementException | org.openqa.selenium.NoSuchElementException | AssertionError e) {
+			WebElement ex = this.driver.findElement(By.xpath("//*[contains(text(),'" + name + "')]"));
+			el = ex;
+		}
+
+		return el;
+	}
+
+	public WebElement Webelement_Select_Datepicker(String name) throws Exception {
+		List<WebElement> users = driver.findElements(
+				By.xpath("//*[contains(text(),'" + name + "')]/../..//input[contains(@class,'Datepicker')]"));
+		if (users.size() == 0)
+			throw new Exception("element not found");
+		WebElement ele = null;
+
+		for (WebElement field : users) {
+			try {
+				Assert.assertTrue(field.isDisplayed());
+				ele = field;
+				break;
+			} catch (AssertionError e) {
+
+			}
+
+		}
+		if (ele == null)
+			throw new Exception("Element not found");
+		return ele;
+
+	}
+
+	public void Select_datepickerdropdownInSection(String label, String value) {
+		Select dropdown = new Select(driver.findElement(By.xpath("//*[contains(@data-handler,'" + label + "')]")));
+		dropdown.selectByVisibleText(value);
+	}
+
+	public WebElement Webelement_Select_DatepickerInSection(String section, String name) throws Exception {
+
+		List<WebElement> users = driver
+				.findElements(By.xpath("//*[contains(text(),'" + section + "')]/../..//*[contains(text(),'" + name
+						+ "')]/../..//input[contains(@class,'Datepicker')]|//*[contains(text(),'" + name
+						+ "')]/../..//input[contains(@name,'date')]|//*[contains(text(),'" + name
+						+ "')]/../..//input[contains(@value,'date')]"));
+		if (users.size() == 0)
+			throw new Exception("element not found");
+		WebElement ele = null;
+
+		for (WebElement field : users) {
+			try {
+				Assert.assertTrue(field.isDisplayed());
+				ele = field;
+				break;
+			} catch (AssertionError e) {
+
+			}
+
+		}
+		if (ele == null)
+			throw new Exception("Element not found");
+		return ele;
+
+	}
+
+	public void Select_DatepickerInSection(String section, String name) throws Exception {
+		WebElement date_select = Webelement_Select_DatepickerInSection(section, name);
+		date_select.click();
+	}
+
+	public void datePickerInSection(String name, String date_value, String section) throws Exception {
+		Select_DatepickerInSection(section, name);
+		int currentmonth;
+		int mon;
+		String temp_month, temp_month_short, new_m;
+		String date, month, year;
+		Calendar now = Calendar.getInstance();
+		currentmonth = (now.get(Calendar.MONTH) + 1);
+		date = date_value.substring(2, 4);
+		String date_n;
+
+		if (date.substring(0, 1).equals("0")) {
+			date_n = date.substring(1, 2);
+
+			System.out.print("new dae is:" + date_n);
+		}
+
+		else {
+			date_n = date;
+		}
+
+		month = date_value.substring(0, 2);
+		mon = Integer.parseInt(month);
+
+		Month m = Month.of(mon);
+		temp_month = m.name();
+		temp_month_short = temp_month.substring(0, 3);
+		new_m = camelCaseWithoutSpace(temp_month_short);
+		System.out.println("Hello sneha" + new_m);
+
+		year = date_value.substring(4, 8);
+
+		Select_datepickerdropdownInSection(year, "Year");
+		Select_datepickerdropdownInSection(new_m, "Month");
+
+		WebElement day = driver
+				.findElement(By.xpath("//*[contains(@data-handler, 'Day')]//*[contains(text(),'" + date_n + "')]"));
+		day.click();
+
+	}
+
+	// code for date picker- sneha
+	public void Date_selectionInSection(String date_value) throws InterruptedException {
+		int currentmonth;
+		int mon;
+		String temp_month, temp_month_short, new_m;
+		String date, month, year;
+		Calendar now = Calendar.getInstance();
+		currentmonth = (now.get(Calendar.MONTH) + 1);
+		date = date_value.substring(2, 4);
+		String date_n;
+
+		if (date.substring(0, 1).equals("0")) {
+			date_n = date.substring(1, 2);
+
+			System.out.print("new dae is:" + date_n);
+		}
+
+		else {
+			date_n = date;
+		}
+
+		month = date_value.substring(0, 2);
+		mon = Integer.parseInt(month);
+
+		Month m = Month.of(mon);
+		temp_month = m.name();
+		temp_month_short = temp_month.substring(0, 3);
+		new_m = camelCaseWithoutSpace(temp_month_short);
+		System.out.println("Hello sneha" + new_m);
+
+		year = date_value.substring(4, 8);
+
+		Select_datepickerdropdownInSection(year, "Year");
+		Select_datepickerdropdownInSection(new_m, "Month");
+
+		WebElement day = driver
+				.findElement(By.xpath("//*[contains(@data-handler, 'Day')]//*[contains(text(),'" + date_n + "')]"));
+		day.click();
+
+	}
+
+	public void Select_Datepicker(String name) throws Exception {
+		WebElement date_select = Webelement_Select_Datepicker(name);
+		date_select.click();
+	}
+
+	// code for date picker- sneha
+	public WebElement WebelementSelectDatepicker(String name) throws Exception {
+		List<WebElement> users = driver.findElements(By.xpath(
+				"//*[contains(text(),'" + name + "')]/../..//input[contains(@class,'Datepicker')]|//*[contains(text(),'"
+						+ name + "')]/../..//input[contains(@name,'date')]|//*[contains(text(),'" + name
+						+ "')]/../..//input[contains(@value,'date')]"));
+		if (users.size() == 0)
+			throw new Exception("element not found");
+		WebElement ele = null;
+
+		for (WebElement field : users) {
+			try {
+				Assert.assertTrue(field.isDisplayed());
+
+				ele = field;
+				break;
+
+			} catch (AssertionError e) {
+
+			}
+
+		}
+		if (ele == null)
+			throw new Exception("Element not found");
+		return ele;
+
+	}
+
+	public void SelectDatepicker(String name) throws Exception {
+		WebElement date_select = WebelementSelectDatepicker(name);
+		date_select.click();
+	}
+
+	// code for date picker- sneha
+	public void dateSelection(String name, String date_value) throws Exception {
+		SelectDatepicker(name);
+
+		int currentmonth;
+		int mon;
+		String temp_month, temp_month_short, new_m;
+		String date, month, year;
+		Calendar now = Calendar.getInstance();
+		currentmonth = (now.get(Calendar.MONTH) + 1);
+		date = date_value.substring(2, 4);
+		String date_n;
+
+		if (date.substring(0, 1).equals("0")) {
+			date_n = date.substring(1, 2);
+
+			System.out.print("new dae is:" + date_n);
+		}
+
+		else {
+			date_n = date;
+		}
+
+		month = date_value.substring(0, 2);
+		mon = Integer.parseInt(month);
+
+		Month m = Month.of(mon);
+		temp_month = m.name();
+		temp_month_short = temp_month.substring(0, 3);
+		new_m = camelCaseWithoutSpace(temp_month_short);
+		System.out.println("Hello sneha" + new_m);
+
+		year = date_value.substring(4, 8);
+
+		Selectdatepickerdropdown(year, "Year");
+
+		Selectdatepickerdropdown(new_m, "Month");
+
+		WebElement day = driver
+				.findElement(By.xpath("//*[contains(@data-handler, 'Day')]//*[contains(text(),'" + date_n + "')]"));
+		day.click();
+
+	}
+
+	public static <T> Set<T> getCommonElements(Collection<? extends Collection<T>> collections) {
+
+		Set<T> common = new LinkedHashSet<T>();
+		if (!collections.isEmpty()) {
+			Iterator<? extends Collection<T>> iterator = collections.iterator();
+			common.addAll(iterator.next());
+			while (iterator.hasNext()) {
+				common.retainAll(iterator.next());
+			}
+		}
+		return common;
+	}
+
+//	/*
+//	 * public static void main(String[] args) { List<String> a = Arrays.asList("a",
+//	 * "b", "c"); List<String> b = Arrays.asList("a", "b", "c", "d"); List<String> c
+//	 * = Arrays.asList("a", "b", "f", "g");
+//	 * 
+//	 * List<List<String>> lists1 = new ArrayList<List<String>>(); lists1.add(a);
+//	 * System.out.println("Common in A: " + getCommonElements(lists1));
+//	 * 
+//	 * lists1.add(b); System.out.println("Common in A & B: " +
+//	 * getCommonElements(lists1));
+//	 * 
+//	 * lists1.add(c); System.out.println("Common in A & B & C: " +
+//	 * getCommonElements(lists1));
+//	 * 
+//	 * lists1.remove(a); System.out.println("Common in B & C: " +
+//	 * getCommonElements(lists1)); }
+//	 */
+
+	public static void main(String[] args) {
+		String a = "^123~3456~^abcd ";
+		String[] b = a.split("\\^");
+
+		System.out.println(b[0]);
+		System.out.println(b[1]);
+		System.out.println("******" + b[2]);
+		// System.out.println(b[3]);
+
+		// if(b.length>1) {
+		// System.out.println();
+		// }
+	}
+
+public  void Exceliteration(String path, String sheetname)
+       {
+              try
+           {
+                     String pathnew = path;
+                     int reqsheetno=0;
+                       
+                       FileInputStream fis = new FileInputStream(pathnew);
+
+                       Workbook workbook = new XSSFWorkbook(fis);
+                       List<String> sheetNames = new ArrayList<String>();
+                       
+                       for (int i=0; i<workbook.getNumberOfSheets(); i++) {
+                             
+                               sheetNames.add( workbook.getSheetName(i) );
+                               if(sheetname.equals(workbook.getSheetName(i)))
+                               {
+                                   reqsheetno=i;
+                               }
+                               
+                           }
+                       
+                       Sheet sheet = workbook.getSheetAt(reqsheetno);
+                       
+                       int lastRow = sheet.getLastRowNum();
+                       
+System.out.print("No of rows"+ sheet.getLastRowNum() );
+          
+           int column = 1;
+           int k;
+           int col_req=1;
+           
+           XSSFRow firstrow = (XSSFRow) sheet.getRow(0);
+           int columnCount = sheet.getRow(0).getLastCellNum() + 1;
+           
+           for(k=1; k <columnCount; k++){
+              
+              try {
+                String cellValue = "";
+                try{
+                    cellValue = firstrow.getCell(k).getStringCellValue();
+                    
+                    if(cellValue.equals(currentuser))
+                    {
+                          col_req=k;
+                          System.out.print("Required column is" + col_req + cellValue);
+                    break; 
+                    }
+                    
+                    
+                }
+                catch(NullPointerException e){
+
+                }
+                
+              }
+                catch (Exception exe) {
+                    exe.printStackTrace();
+                }      
+           }
+           
+           for(int rowNumber =1 ; rowNumber < sheet.getLastRowNum()+1; rowNumber++) {
+              
+              XSSFRow row = (XSSFRow) sheet.getRow(rowNumber);
+              
+
+              
+                     XSSFCell cellnum = row.getCell(0);
+                     XSSFCell param=row.getCell(col_req);
+                     String  tempparam=String.valueOf(param);
+                     System.out.println("Sneha--new"+ tempparam);
+                     
+                     List<String> items = Arrays.asList(tempparam.split("\\^"));
+                    
+                    String  tempfirst=String.valueOf(cellnum);
+                                              
+                      
+                           System.out.println(tempfirst);
+                           
+                           if(tempfirst.contains("*"))
+                           {
+                                  System.out.print("Entering if");
+                                  String skipvalue=items.get(0);
+                                  
+                                  if(skipvalue.equalsIgnoreCase("&SKIP"))
+                                  {
+                                         System.out.print("Skipping this step");
+                                  }
+                                  else
+                                  {
+                       switch(tempfirst) 
+                       {
+                       
+                       case "navigate * url":
+                                      this.navigateToURL(items.get(0));
+                                      break;
+                                    case "click * button":
+                                             this.clickBtn(items.get(0));
+                                             break;
+                                    case "click * link":
+                                            this.clickOnLink(items.get(0));
+                                             break;
+                                    case "select * from * dropdown":
+                                             this.selectDropdownValue(items.get(0), items.get(1));
+                                             break;
+                                    case "hoverover * tab":
+                                             this.hoverOverTab(items.get(0));
+                                             break; 
+                                    case "click * tab":
+                                             this.clickTab(items.get(0));
+                                             break;
+                                    case "click * menu":
+                                             this.clickTab(items.get(0));
+                                             break;  
+                                           
+                                    case "click * text":
+                                            this.clickOnText(items.get(0));
+                                             break;
+                                             
+                                    case "click * expandList":
+                                            this.clickOnExpandList(items.get(0));
+                                             break; 
+                                            
+                                    case "click * checkbox":
+                                             this.clickRadioBtnCheckbox(items.get(0));
+                                             break; 
+                                             
+                                    case "verify * message":
+                                            this.verifyTextIsDisplayed(items.get(0));
+                                             break;
+                                             
+                                   case "verify * text":
+                                             this.verifyTextIsDisplayed(items.get(0));
+                                             break;
+                                            
+                                  case "click * radiobutton":
+                                             this.clickRadioBtnCheckbox(items.get(0));
+                                             break;
+                                            
+                                  case "press * key":
+                                            this.pressKeyboardKey(items.get(0));
+                                             break;  
+                                             
+                                  case "select * as * datepicker":
+                                             this.dateSelection(items.get(0), items.get(1));
+                                             break;      
+                                           
+                                  case "verify * button *":
+                                             this.verifyBtnEnabledOrDisabled(items.get(0), items.get(1));
+                                             break;
+                                             
+                                             
+                                   case "verify * currenturl":
+                                             this.verifyCurrentURL(items.get(0));
+                                             break;
+                                             
+                                   case "verify * pageheading":
+                                             this.verifyPageHeading(items.get(0));
+                                             break;
+                                             
+                                   case "verify * button":
+                                             this.verifyBtnIsDisplayed(items.get(0));
+                                             break; 
+                                             
+                                  case "verify * button in *":
+                                             this.verifyBtnIsDisplayedInSection(items.get(0), items.get(1));
+                                             break;  
+                                            
+                                  case "verify * radiobutton in *":
+                                            // this.verifyRadioBtnCheckboxInSectionIsDsiplayed(items.get(0), items.get(1));
+                                             break; 
+                                  case "verify * radiobutton":
+                                            // this.verifyRadioBtnCheckboxIsDisplayed(items.get(0));
+                                             break; 
+                                             
+                                  case "verify * tab":
+                                            // this.verifyTabIsDisplayed(items.get(0));
+                                             break;   
+                                          
+                                  case "verify * textbox":
+                                            // this.verifyTextboxIsDisplayed(items.get(0));
+                                             break; 
+
+                                  case "verify * checkbox":
+                                         //  this.verifyRadioBtnCheckboxIsDisplayed(items.get(0));
+                                             break; 
+                                             
+                                  case "verify * checkbox in *":
+                                           //  this.verifyRadioBtnCheckboxInSectionIsDsiplayed(items.get(0), items.get(1));
+                                             break;
+                                             
+                                  case "verify * sectionheading":
+                                         //  this.verifySectionHeading(items.get(0));
+                                             break; 
+
+                                  case "verify * link":
+                                         //  this.verifyLinkIsDisplayed(items.get(0));
+                                             break; 
+
+                                  case "verify * dropdown":
+                                           //  this.verifyDropdownIsDisplayed(items.get(0));
+                                             break;    
+
+                                   case "enter * in *":
+                                             this.enterTextInTextBox(items.get(0), items.get(1));
+                                             break;
+                                             
+                                    case "enter * in * with randomalphabet":
+                                             this.enterAlphaRandom(items.get(0), items.get(1));
+                                             break;
+                                             
+                                  case "enter * in * with randomnumber":
+                                             this.enterNumericRandom(items.get(0), items.get(1));
+                                             break;    
+                                             
+                                  case "click * accordion":
+                                             this.clickOnText(items.get(0));
+                                             break;  
+                                  case "click * button in *":
+                                             this.clickBtnInSection(items.get(0), items.get(1));
+                                             break; 
+                                             
+                                  case "click * menu in *":
+                                             this.clickTabInSection(items.get(0), items.get(1));
+                                             break;  
+                                             
+                                             
+                                  case "click * link in *":
+                                            this.clickOnLinkInSection(items.get(0), items.get(1));
+                                             break;
+                                             
+                                  case "click * checkbox in *":
+                                             this.clickRadioBtnCheckboxInSection(items.get(0), items.get(1));
+                                             break; 
+                                   case "enter * in * in *":
+                                             this.enterTextInSection(items.get(0), items.get(1), items.get(2));
+                                             break;   
+                                             
+                                   case "select * from * dropdown in *":
+                                             this.selectDropdownValueInSection(items.get(0), items.get(1), items.get(2));
+                                             break;
+                                             
+                                  case "hoverover * tab in *":
+                                             this.hoverOverTabInSection(items.get(0), items.get(1));
+                                             break;    
+                                             
+                                  case "verify * tab in *":
+                                             this.verifyTabIsDisplayedInSection(items.get(0), items.get(1));
+                                             break;       
+                                  case "verify * sectionheading in *":
+                                             this.verifySectionHeadingInSection(items.get(0), items.get(1));
+                                             break;
+                                   
+                                  case "verify * textbox in *":
+                                             this.verifyTextboxIsDisplayedInSection(items.get(0), items.get(1));
+                                             break;
+                                           
+                                  case "verify * link in *":
+                                            this.verifyLinkIsDisplayedInSection(items.get(0), items.get(1));
+                                             break;
+                                             
+                                  case "verify * dropdown in *":
+                                             this.verifyDropdownIsDisplayedInSection(items.get(0), items.get(1));
+                                             break;  
+                                   case "select * as * datepicker in *":
+                                           // this.selectDatepickerInSection(items.get(0), items.get(1), items.get(2));
+                                             break;
+                                             
+                                  case "verify * checkbox in * section *":
+                                           //  this.verifyCheckboxbEnabledDisabledNotdisplayed(items.get(0), items.get(1), items.get(2));
+                                             break;   
+                                             
+                                  case "verify * radiobutton in * section *":
+                                         //   this.verifyRadiobuttonEnabledDisabledNotdisplayed(items.get(0), items.get(1), items.get(2));
+                                             break;
+                                             
+                                   case "click * radio button of *":
+                                             this.clickRadioBtnCheckboxInSection(items.get(0), items.get(1));
+                                             break;
+                                             
+                                  case "verify * textbox *":
+                                           //  this.verifyTextboxEnabledOrDisabled(items.get(0), items.get(1));
+                                             break;
+                                             
+                                  case "verify * tab *":
+                                         //   this.verifyTabEnabledOrDisabled(items.get(0), items.get(1));
+                                             break; 
+                                             
+                                  case "verify * link *":
+                                           // this.verifyLinkEnabledOrDisabled(items.get(0), items.get(1));
+                                             break;
+                                             
+                                  case "verify * message in *":
+                                           //  this.verifyTextIsDisplayedInSection(items.get(0), items.get(1));
+                                             break;
+                                             
+                                  case "verify * dropdown *":
+                                         //   this.verifyDropdownEnabledOrDisabled(items.get(0), items.get(1));
+                                             break;
+                                             
+                                    case "Login ** and ** and *":
+                                             this.login(items.get(0), items.get(1), items.get(2), items.get(3), items.get(4));
+                                             break;
+                                    case "scroll * pixels":
+                                          //  this.scrollByPixels(items.get(0));
+                                             break;
+                                             
+                                  case "upload * file":
+                                         //   this.uploadFile(items.get(0), items.get(1));
+                                             break;
+                                             
+                                    case "Click * droplist":
+                                          //   this.clickDroprightDropdown(items.get(0));
+                                             break;
+                                            
+                                             
+                                    default:
+                                      System.err.println("Your Action is not valid");
+
+                       }
+                                  }
+                      
+                           } 
+                           
+                           else
+                           {
+                                  System.out.println("Entering else");
+                                  String elseskipvalue=items.get(0);
+                                  
+                                  if(elseskipvalue.equalsIgnoreCase("&SKIP"))
+                                  {
+                                         System.out.print("Skipping this step");
+                                  }
+                                  
+                                  else
+                                  {
+                                  
+                           switch(findStep(tempfirst)) {
+                                           case "navigate * url":
+                                             this.navigateToURL(this.findArguments(tempfirst).get(0));
+                                             break;
+                                           case "click * button":
+                                                    this.clickBtn(this.findArguments(tempfirst).get(0));
+                                                    break;
+                                           case "click * link":
+                                                   this.clickOnLink(this.findArguments(tempfirst).get(0));
+                                                    break;
+                                           case "select * from * dropdown":
+                                                    this.selectDropdownValue(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                                    break;
+                                           case "hoverover * tab":
+                                                    this.hoverOverTab(this.findArguments(tempfirst).get(0));
+                                                    break; 
+                                           case "click * tab":
+                                                    this.clickTab(this.findArguments(tempfirst).get(0));
+                                                    break;
+                                           case "click * menu":
+                                             this.clickTab(this.findArguments(tempfirst).get(0));
+                                             break;  
+                                           
+                                           case "click * text":
+                                                    this.clickOnText(this.findArguments(tempfirst).get(0));
+                                                    break;
+                                                    
+                                           case "click * expandList":
+                                            this.clickOnExpandList(this.findArguments(tempfirst).get(0));
+                                             break; 
+                                            
+                                           case "click * checkbox":
+                                                    this.clickRadioBtnCheckbox(this.findArguments(tempfirst).get(0));
+                                                    break; 
+                                                    
+                                           case "verify * message":
+                                                    this.verifyTextIsDisplayed(this.findArguments(tempfirst).get(0));
+                                                    break;
+                                                    
+                                          case "verify * text":
+                                             this.verifyTextIsDisplayed(this.findArguments(tempfirst).get(0));
+                                             break;
+                                            
+                                         case "click * radiobutton":
+                                             this.clickRadioBtnCheckbox(this.findArguments(tempfirst).get(0));
+                                             break;
+                                            
+                                         case "press * key":
+                                             this.pressKeyboardKey(this.findArguments(tempfirst).get(0));
+                                             break;  
+                                                    
+                                         case "select * as * datepicker":
+                                             this.dateSelection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;      
+                                           
+                                         case "verify * button *":
+                                          //   this.verifyButtonEnabledDisabledNotDisplayed(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;
+                                             
+                                                    
+                                          case "verify * currenturl":
+                                            this.verifyCurrentURL(this.findArguments(tempfirst).get(0));
+                                             break;
+                                                    
+                                          case "verify * pageheading":
+                                                    this.verifyPageHeading(this.findArguments(tempfirst).get(0));
+                                                    break;
+                                                    
+                                          case "verify * button":
+                                                    this.verifyBtnIsDisplayed(this.findArguments(tempfirst).get(0));
+                                                    break; 
+                                                    
+                                         case "verify * button in *":
+                                             this.verifyBtnIsDisplayedInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;  
+                                            
+                                         case "verify * radiobutton in *":
+                                           //  this.verifyRadioBtnCheckboxInSectionIsDsiplayed(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break; 
+                                         case "verify * radiobutton":
+                                          //   this.verifyRadioBtnCheckboxIsDisplayed(this.findArguments(tempfirst).get(0));
+                                             break; 
+                                             
+                                         case "verify * tab":
+                                          //   this.verifyRadioBtnCheckboxIsDisplayed(this.findArguments(tempfirst).get(0));
+                                             break;   
+                                          
+                                         case "verify * textbox":
+                                          //   this.verifyTextboxIsDisplayed(this.findArguments(tempfirst).get(0));
+                                             break; 
+                                             
+                                          case "click * radio button of *":
+                                                    this.clickRadioBtnCheckboxInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                                    break;
+
+                                         case "verify * checkbox":
+                                          //   this.verifyRadioBtnCheckboxIsDisplayed(this.findArguments(tempfirst).get(0));
+                                             break; 
+                                             
+                                         case "verify * checkbox in *":
+                                          //   this.verifyRadioBtnCheckboxInSectionIsDsiplayed(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;
+                                             
+                                         case "verify * sectionheading":
+                                           //  this.verifySectionHeading(this.findArguments(tempfirst).get(0));
+                                             break; 
+
+                                         case "verify * link":
+                                           //  this.verifyLinkIsDisplayed(this.findArguments(tempfirst).get(0));
+                                             break; 
+  
+                                         case "verify * dropdown":
+                                           //  this.verifyDropdownIsDisplayed(this.findArguments(tempfirst).get(0));
+                                             break;    
+
+                                          case "enter * in *":
+                                                    this.enterTextInTextBox(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                                    break;
+                                                    
+                                           case "enter * in * with randomalphabet":
+                                                    this.enterAlphaRandom(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                                    break;
+                                                    
+                                         case "enter * in * with randomnumber":
+                                            this.enterNumericRandom(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;    
+                                             
+                                         case "click * accordion":
+                                             this.clickOnText(this.findArguments(tempfirst).get(0));
+                                             break;  
+                                         case "click * button in *":
+                                             this.clickBtnInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break; 
+                                             
+                                         case "click * menu in *":
+                                            this.clickTabInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;  
+                                             
+                                             
+                                         case "click * link in *":
+                                             this.clickOnLinkInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;
+                                             
+                                         case "click * checkbox in *":
+                                             this.clickRadioBtnCheckboxInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break; 
+                                          case "enter * in * in *":
+                                                    this.enterTextInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1), this.findArguments(tempfirst).get(2));
+                                                    break;   
+                                             
+                                          case "select * from * dropdown in *":
+                                                    this.selectDropdownValueInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1), this.findArguments(tempfirst).get(2));
+                                                    break;
+                                                    
+                                         case "hoverover * tab in *":
+                                             this.hoverOverTabInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;    
+                                                    
+                                         case "verify * tab in *":
+                                             this.verifyTabIsDisplayedInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;       
+                                         case "verify * sectionheading in *":
+                                             this.verifySectionHeadingInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;
+                                          
+                                         case "verify * textbox in *":
+                                             this.verifyTextboxIsDisplayedInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;
+                                           
+                                         case "verify * link in *":
+                                             this.verifyLinkIsDisplayedInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;
+                                             
+                                         case "verify * dropdown in *":
+                                             this.verifyDropdownIsDisplayedInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;  
+                                          case "select * as * datepicker in *":
+                                                //    this.selectDatepickerInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1), this.findArguments(tempfirst).get(2));
+                                                    break;
+                                                    
+                                         case "verify * checkbox in * section *":
+                                           //  this.verifyCheckboxbEnabledDisabledNotdisplayed(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1), this.findArguments(tempfirst).get(2));
+                                             break;   
+                                             
+                                         case "verify * radiobutton in * section *":
+                                           //  this.verifyRadiobuttonEnabledDisabledNotdisplayed(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1), this.findArguments(tempfirst).get(2));
+                                             break;
+                                             
+                                         case "verify * textbox *":
+                                          //   this.verifyTextboxEnabledDisabledNotdisplayed(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;
+                                                    
+                                         case "verify * tab *":
+                                         //   this.verifyTabEnabledDisabledNotdisplayed(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break; 
+                                             
+                                         case "verify * link *":
+                                          //   this.verifyLinkEnabledDisabledNotdisplayed(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;
+                                             
+                                         case "verify * message in *":
+                                           //  this.verifyTextIsDisplayedInSection(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;
+                                             
+                                         case "verify * dropdown *":
+                                          //   this.verifyDropdownEnabledDisabledNotdisplayed(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;
+                                             
+                                           case "Login ** and ** and *":
+                                                    this.login(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1), this.findArguments(tempfirst).get(2), this.findArguments(tempfirst).get(3), this.findArguments(tempfirst).get(4));
+                                                    break;
+                                           case "scroll * pixels":
+                                                //   this.scrollByPixels(this.findArguments(tempfirst).get(0));
+                                                    break;
+                                                    
+                                         case "upload * file":
+                                           //  this.uploadFile(this.findArguments(tempfirst).get(0), this.findArguments(tempfirst).get(1));
+                                             break;
+                                             
+                                           case "Click * droplist":
+                                                //    this.clickDroprightDropdown(this.findArguments(tempfirst).get(0));
+                                                    break;
+                                                    
+                                           default:
+                                             System.err.println("Your Action is not valid");
+                                         }
+
+                                  }
+                           }
+                      
+                  }
+           }
+           catch(Exception e){
+               e.printStackTrace();
+           }
+       }
+
+
+}

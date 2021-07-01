@@ -1,0 +1,9 @@
+2021-06-30 07:04:01:085 [Appium] Welcome to Appium v1.21.0
+2021-06-30 07:04:01:086 [Appium] Non-default server args:
+2021-06-30 07:04:01:086 [Appium]   port: 23526
+2021-06-30 07:04:01:087 [Appium]   logFile: C:\Rahul\appium_workspace\MobileAutomation\serverlog.log
+2021-06-30 07:04:01:087 [Appium]   relaxedSecurityEnabled: true
+2021-06-30 07:04:01:105 [Appium] Appium REST http interface listener started on 0.0.0.0:23526
+2021-06-30 07:04:01:395 [HTTP] --> GET /wd/hub/status
+2021-06-30 07:04:01:395 [HTTP] {}
+2021-06-30 07:04:01:396 [GENERIC] Calling AppiumDriver.getStatus() with args: []
